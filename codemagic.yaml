@@ -2,6 +2,8 @@ workflows:
   ios-release:
     name: "eSign : Sign Any Docs iOS Release"
     instance_type: mac_mini_m2
+    integrations:
+      app_store_connect: kamiaccount
     environment:
       flutter: stable
       xcode: latest
