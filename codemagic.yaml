@@ -1,6 +1,6 @@
 workflows:
   ios-release:
-    name: eSign : Sign Any Docs iOS Release
+    name: "eSign : Sign Any Docs iOS Release"
     instance_type: mac_mini_m2
     environment:
       flutter: stable
