@@ -1,0 +1,142 @@
+{
+  "appPolicies" : {
+    "eula" : "",
+    "policies" : [
+      {
+        "locale" : "en_US",
+        "policyText" : "Documents are processed locally unless the user exports or shares them.",
+        "policyURL" : ""
+      }
+    ]
+  },
+  "identifier" : "E51D0C01",
+  "nonRenewingSubscriptions" : [
+
+  ],
+  "products" : [
+
+  ],
+  "settings" : {
+    "_failTransactionsEnabled" : false,
+    "_locale" : "en_US",
+    "_storefront" : "USA"
+  },
+  "subscriptionGroups" : [
+    {
+      "id" : "E51D0C02",
+      "localizations" : [
+        {
+          "description" : "Export, share, and complete unlimited signed documents.",
+          "displayName" : "eSign : Sign Any Docs",
+          "locale" : "en_US"
+        }
+      ],
+      "name" : "eSign : Sign Any Docs Premium",
+      "subscriptions" : [
+        {
+          "adHocOffers" : [
+
+          ],
+          "codeOffers" : [
+
+          ],
+          "displayPrice" : "2.99",
+          "familyShareable" : false,
+          "groupNumber" : 1,
+          "internalID" : "E51D0C03",
+          "introductoryOffer" : {
+            "displayPrice" : "0",
+            "internalID" : "E51D0C04",
+            "paymentMode" : "free",
+            "subscriptionPeriod" : "P3D"
+          },
+          "localizations" : [
+            {
+              "description" : "Export and share completed PDFs with unlimited document signing.",
+              "displayName" : "Weekly Premium",
+              "locale" : "en_US"
+            }
+          ],
+          "productID" : "esign_doc_pro_weekly",
+          "recurringSubscriptionPeriod" : "P1W",
+          "referenceName" : "eSign : Sign Any Docs Weekly",
+          "subscriptionGroupID" : "E51D0C02",
+          "type" : "RecurringSubscription",
+          "winbackOffers" : [
+
+          ]
+        },
+        {
+          "adHocOffers" : [
+
+          ],
+          "codeOffers" : [
+
+          ],
+          "displayPrice" : "7.99",
+          "familyShareable" : false,
+          "groupNumber" : 2,
+          "internalID" : "E51D0C05",
+          "introductoryOffer" : {
+            "displayPrice" : "0",
+            "internalID" : "E51D0C06",
+            "paymentMode" : "free",
+            "subscriptionPeriod" : "P3D"
+          },
+          "localizations" : [
+            {
+              "description" : "Export and share completed PDFs with unlimited document signing.",
+              "displayName" : "Monthly Premium",
+              "locale" : "en_US"
+            }
+          ],
+          "productID" : "esign_doc_pro_monthly",
+          "recurringSubscriptionPeriod" : "P1M",
+          "referenceName" : "eSign : Sign Any Docs Monthly",
+          "subscriptionGroupID" : "E51D0C02",
+          "type" : "RecurringSubscription",
+          "winbackOffers" : [
+
+          ]
+        },
+        {
+          "adHocOffers" : [
+
+          ],
+          "codeOffers" : [
+
+          ],
+          "displayPrice" : "49.99",
+          "familyShareable" : false,
+          "groupNumber" : 3,
+          "internalID" : "E51D0C07",
+          "introductoryOffer" : {
+            "displayPrice" : "0",
+            "internalID" : "E51D0C08",
+            "paymentMode" : "free",
+            "subscriptionPeriod" : "P3D"
+          },
+          "localizations" : [
+            {
+              "description" : "Export and share completed PDFs with unlimited document signing.",
+              "displayName" : "Yearly Premium",
+              "locale" : "en_US"
+            }
+          ],
+          "productID" : "esign_doc_pro_yearly",
+          "recurringSubscriptionPeriod" : "P1Y",
+          "referenceName" : "eSign : Sign Any Docs Yearly",
+          "subscriptionGroupID" : "E51D0C02",
+          "type" : "RecurringSubscription",
+          "winbackOffers" : [
+
+          ]
+        }
+      ]
+    }
+  ],
+  "version" : {
+    "major" : 4,
+    "minor" : 0
+  }
+}
