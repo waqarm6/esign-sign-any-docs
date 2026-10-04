@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import 'services/subscription_service.dart';
 
@@ -12,6 +13,10 @@ class StartupPaywallScreen extends StatefulWidget {
 }
 
 class _StartupPaywallScreenState extends State<StartupPaywallScreen> {
+  static final _privacyUrl = Uri.parse(
+      'https://github.com/waqarm6/esign-sign-any-docs/blob/main/PRIVACY_POLICY.md');
+  static final _termsUrl = Uri.parse(
+      'https://github.com/waqarm6/esign-sign-any-docs/blob/main/TERMS_OF_USE.md');
   final SubscriptionService _billing = SubscriptionService();
   List<SubscriptionOffer> _offers = const [];
   SubscriptionPlan _selectedPlan = SubscriptionPlan.yearly;
@@ -333,6 +338,13 @@ class _StartupPaywallScreenState extends State<StartupPaywallScreen> {
           title: Text(title),
           content: Text(body),
           actions: [
+            TextButton(
+              onPressed: () async {
+                final url = title == 'Privacy policy' ? _privacyUrl : _termsUrl;
+                await launchUrl(url, mode: LaunchMode.externalApplication);
+              },
+              child: const Text('Open full policy'),
+            ),
             TextButton(
               onPressed: () => Navigator.of(dialogContext).pop(),
               child: const Text('Close'),

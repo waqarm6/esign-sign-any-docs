@@ -863,6 +863,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
   }
 
   void _showPolicy(BuildContext context, String title) {
+    final url = Uri.parse(title == 'Privacy policy'
+        ? 'https://github.com/waqarm6/esign-sign-any-docs/blob/main/PRIVACY_POLICY.md'
+        : 'https://github.com/waqarm6/esign-sign-any-docs/blob/main/TERMS_OF_USE.md');
     showDialog<void>(
       context: context,
       builder: (_) => AlertDialog(
@@ -873,6 +876,12 @@ class _SettingsScreenState extends State<SettingsScreen> {
               : 'eSign : Sign Any Docs lets you edit documents locally. Export and sharing require an active trial or subscription, which renews until cancelled through the app store.',
         ),
         actions: [
+          TextButton(
+            onPressed: () async {
+              await launchUrl(url, mode: LaunchMode.externalApplication);
+            },
+            child: const Text('Open full policy'),
+          ),
           TextButton(
             onPressed: () => Navigator.pop(context),
             child: const Text('Close'),
