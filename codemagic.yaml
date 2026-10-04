@@ -17,7 +17,7 @@ workflows:
       - name: Apply App Store signing profiles
         script: xcode-project use-profiles
       - name: Build signed IPA
-        script: flutter build ipa --release
+        script: flutter build ipa --release --export-options-plist=$HOME/export_options.plist
     artifacts:
       - build/ios/ipa/*.ipa
       - /tmp/xcodebuild_logs/*.log
