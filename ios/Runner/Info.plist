@@ -4,6 +4,8 @@
 <dict>
 	<key>NSCameraUsageDescription</key>
 	<string>eSign : Sign Any Docs uses the camera to scan documents.</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>eSign : Sign Any Docs needs access to your photo library so you can import documents and images for signing.</string>
 	<key>CADisableMinimumFrameDurationOnPhone</key>
 	<true/>
 	<key>CFBundleDevelopmentRegion</key>
