@@ -1,6 +1,6 @@
 # eSign Doc Pro
 
-Initial Flutter UI foundation for a professional, non-AI document signing app.
+Cross-platform Flutter document-completion workspace for iPhone, iPad, and Android.
 
 ## Included in this first pass
 
@@ -10,12 +10,13 @@ Initial Flutter UI foundation for a professional, non-AI document signing app.
 - Home screen with Scan Document and Import File actions
 - Drafts and Completed document areas
 - Signature and saved tools section
+- Purpose-built Agreement, Invoice, and Consent document kits with editable starter fields
 - Privacy-focused local-processing message
 - Material 3 theme with restrained navy/teal visual language
 - Responsive-friendly navigation structure for future iPhone, iPad, and Android layouts
 - Local document model and draft/completed persistence service
 - Native scanner/import platform channel boundary
-- StoreKit/Google Play billing service boundary for the weekly entitlement
+- StoreKit/Google Play billing service boundary for subscription entitlements
 
 ## Next implementation modules
 
@@ -27,4 +28,4 @@ Initial Flutter UI foundation for a professional, non-AI document signing app.
 
 See [PRODUCT_SPEC.md](PRODUCT_SPEC.md) for the complete product requirements and delivery phases.
 
-The Flutter SDK was not available in the current workspace, so this first pass was not run or compiled here.
+See [docs/APP_REVIEW_RESPONSE_DRAFT.md](docs/APP_REVIEW_RESPONSE_DRAFT.md) for the factual App Review response draft. Complete its bracketed testing, ownership, and account-specific facts before sending it to Apple.

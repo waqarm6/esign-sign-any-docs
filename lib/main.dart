@@ -254,6 +254,58 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             ],
           ),
+          const SizedBox(height: 20),
+          Card(
+            color: const Color(0xFFF0F7F7),
+            child: Padding(
+              padding: const EdgeInsets.fromLTRB(16, 16, 16, 14),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    children: [
+                      const Icon(Icons.auto_awesome_mosaic_outlined,
+                          color: Color(0xFF0E7490)),
+                      const SizedBox(width: 10),
+                      Expanded(
+                        child: Text(
+                          'Start with a document kit',
+                          style: Theme.of(context).textTheme.titleMedium,
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 6),
+                  Text(
+                    'Begin with the fields common to your document, then adjust everything before saving.',
+                    style: Theme.of(context).textTheme.bodyMedium,
+                  ),
+                  const SizedBox(height: 12),
+                  Wrap(
+                    spacing: 8,
+                    runSpacing: 8,
+                    children: [
+                      _KitChip(
+                        icon: Icons.description_outlined,
+                        label: 'Agreement',
+                        onTap: () => _openKit(context, DocumentKit.agreement),
+                      ),
+                      _KitChip(
+                        icon: Icons.receipt_long_outlined,
+                        label: 'Invoice',
+                        onTap: () => _openKit(context, DocumentKit.invoice),
+                      ),
+                      _KitChip(
+                        icon: Icons.fact_check_outlined,
+                        label: 'Consent',
+                        onTap: () => _openKit(context, DocumentKit.consent),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+          ),
           const SizedBox(height: 28),
           _SectionHeader(
             title: 'Your documents',
@@ -381,6 +433,15 @@ class _HomeScreenState extends State<HomeScreen> {
     await Navigator.of(
       context,
     ).push(MaterialPageRoute(builder: (_) => ScannerFlow(mode: mode)));
+    _refreshDocuments();
+  }
+
+  Future<void> _openKit(BuildContext context, DocumentKit kit) async {
+    await Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (_) => ScannerFlow(mode: ScannerMode.scan, kit: kit),
+      ),
+    );
     _refreshDocuments();
   }
 
@@ -1908,6 +1969,31 @@ class _ToolRow extends StatelessWidget {
       );
 }
 
+class _KitChip extends StatelessWidget {
+  final IconData icon;
+  final String label;
+  final VoidCallback onTap;
+
+  const _KitChip({
+    required this.icon,
+    required this.label,
+    required this.onTap,
+  });
+
+  @override
+  Widget build(BuildContext context) => ActionChip(
+        avatar: Icon(icon, size: 17, color: const Color(0xFF0E7490)),
+        label: Text(label),
+        onPressed: onTap,
+        backgroundColor: Colors.white,
+        side: const BorderSide(color: Color(0xFFB9D9DA)),
+        labelStyle: const TextStyle(
+          color: Color(0xFF285E67),
+          fontWeight: FontWeight.w600,
+        ),
+      );
+}
+
 class DocumentWorkspace extends StatefulWidget {
   final String title;
   final String? sourcePath;
@@ -1917,6 +2003,7 @@ class DocumentWorkspace extends StatefulWidget {
   final DocumentStatus status;
   final DateTime? createdAt;
   final int pageCount;
+  final DocumentKit? kit;
   const DocumentWorkspace({
     super.key,
     required this.title,
@@ -1927,6 +2014,7 @@ class DocumentWorkspace extends StatefulWidget {
     this.status = DocumentStatus.draft,
     this.createdAt,
     this.pageCount = 1,
+    this.kit,
   });
 
   @override
@@ -2023,9 +2111,43 @@ class _DocumentWorkspaceState extends State<DocumentWorkspace>
     draftCreatedAt = widget.createdAt ?? DateTime.now();
     documentPageCount = math.max(1, widget.pageCount);
     if (widget.savedDraft == null) {
+      _applyDocumentKit(widget.kit);
       _saveDraft();
     } else {
       _restoreDraft(widget.savedDraft!);
+    }
+  }
+
+  void _applyDocumentKit(DocumentKit? kit) {
+    switch (kit) {
+      case DocumentKit.agreement:
+        textPlaced = true;
+        textValue = 'Date signed';
+        textPosition = const Offset(54, 220);
+        datePlaced = true;
+        datePosition = const Offset(54, 250);
+        break;
+      case DocumentKit.invoice:
+        textPlaced = true;
+        textValue = 'Approved for payment';
+        textPosition = const Offset(54, 220);
+        checkboxPlaced = true;
+        checkboxPosition = const Offset(54, 270);
+        stampPlaced = true;
+        stampText = 'APPROVED';
+        stampPosition = const Offset(54, 320);
+        break;
+      case DocumentKit.consent:
+        textPlaced = true;
+        textValue = 'I agree to the terms';
+        textPosition = const Offset(54, 220);
+        checkboxPlaced = true;
+        checkboxPosition = const Offset(54, 270);
+        datePlaced = true;
+        datePosition = const Offset(54, 320);
+        break;
+      case null:
+        break;
     }
   }
 
@@ -4393,9 +4515,19 @@ const _annotationFontFamilies = [
 
 enum ScannerMode { scan, importFile }
 
+enum DocumentKit { agreement, invoice, consent }
+
+String documentKitLabel(DocumentKit kit) => switch (kit) {
+      DocumentKit.agreement => 'Agreement',
+      DocumentKit.invoice => 'Invoice',
+      DocumentKit.consent => 'Consent form',
+    };
+
 class ScannerFlow extends StatefulWidget {
   final ScannerMode mode;
-  const ScannerFlow({super.key, required this.mode});
+  final DocumentKit? kit;
+
+  const ScannerFlow({super.key, required this.mode, this.kit});
 
   @override
   State<ScannerFlow> createState() => _ScannerFlowState();
@@ -4410,7 +4542,9 @@ class _ScannerFlowState extends State<ScannerFlow> {
 
   @override
   Widget build(BuildContext context) {
-    final title = isScan ? 'Scan document' : 'Import file';
+    final title = widget.kit == null
+        ? (isScan ? 'Scan document' : 'Import file')
+        : 'Scan ${documentKitLabel(widget.kit!).toLowerCase()}';
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -4429,7 +4563,9 @@ class _ScannerFlowState extends State<ScannerFlow> {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               Text(
-                isScan ? 'Capture a clear document' : 'Choose a document',
+                widget.kit == null
+                    ? (isScan ? 'Capture a clear document' : 'Choose a document')
+                    : 'Prepare a ${documentKitLabel(widget.kit!).toLowerCase()}',
                 style: Theme.of(context).textTheme.headlineSmall,
               ),
               const SizedBox(height: 8),
@@ -4512,8 +4648,11 @@ class _ScannerFlowState extends State<ScannerFlow> {
       Navigator.of(context).pushReplacement(
         MaterialPageRoute(
           builder: (_) => DocumentWorkspace(
-            title: isScan ? 'Scanned document' : 'Imported document',
+            title: widget.kit == null
+                ? (isScan ? 'Scanned document' : 'Imported document')
+                : '${documentKitLabel(widget.kit!)} draft',
             sourcePath: path,
+            kit: widget.kit,
           ),
         ),
       );
